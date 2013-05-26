@@ -88,7 +88,7 @@ namespace Coercion
             return true;
         }
 
-        public bool RemovePlayer(string name, string host)
+        public bool RemovePlayer(Connection irc, string name, string host)
         {
             Player player = new Player(name, host);
 
@@ -104,6 +104,17 @@ namespace Coercion
                 if (activePlayers[i] == player)
                 {
                     activePlayers.RemoveAt(i);
+                }
+            }
+
+            // Cancel all open missions with them as the target and assign new missions
+            for (int i = 0; i < activeMissions.Count; i++)
+            {
+                if (activeMissions[i].Target == player)
+                {
+                    irc.MessageUser(activeMissions[i].Assassin.Name, "Hey there. Your active assignment on " + activeMissions[i].Target.Name + " has expired. As soon as I come across a new job, I'll be in touch.");
+                    activeMissions.RemoveAt(i);
+                    i--;
                 }
             }
 

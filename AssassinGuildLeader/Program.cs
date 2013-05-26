@@ -48,7 +48,7 @@ namespace Coercion
 
                     case "!stop":
                     case "!quit":
-                        bool removedPlayer = coercion.RemovePlayer(player, host);
+                        bool removedPlayer = coercion.RemovePlayer(irc, player, host);
                         if (removedPlayer)
                         {
                             coercion.NotifyPlayer(irc, player, "You can run, but you can't hide...");
@@ -150,6 +150,25 @@ namespace Coercion
                 }
             }
             */
+
+            string[] splitLine = line.Split(' ');
+
+            if (splitLine.Length > 1 && splitLine[1] == "QUIT")
+            {
+                string name = ParseIRC.GetUsernameSpeaking(line);
+                string host = ParseIRC.GetHostSpeaking(line);
+
+                coercion.RemovePlayer(irc, name, host);
+            }
+
+            // :test!dru@dru.dru NICK :dru
+            if (splitLine.Length > 1 && splitLine[1] == "NICK")
+            {
+                string name = ParseIRC.GetUsernameSpeaking(line);
+                string host = ParseIRC.GetHostSpeaking(line);
+
+                coercion.RemovePlayer(irc, name, host);
+            }
         }
 
         static void ConversationLog(string line)
