@@ -34,21 +34,24 @@ namespace Coercion
 
         public void UpdateGameWords(string channel)
         {
-            Random rng = new Random();
+            ClearGameWords();
+            AddGameWords(channel);
+        }
 
-            // Only update game words every 10 lines or so
-            if (rng.Next(0, 10) == 1)
+        public void ClearGameWords()
+        {
+            gameWords = new List<string>(File.ReadAllLines("../../Wordlists/global-wordlist.txt"));
+        }
+
+        public void AddGameWords(string channel)
+        {
+            try
             {
-                gameWords = new List<string>(File.ReadAllLines("../../Wordlists/global-wordlist.txt"));
+                gameWords.AddRange(new List<string>(File.ReadAllLines("../../Wordlists/" + channel + ".txt")));
+            }
+            catch (Exception e)
+            {
 
-                try
-                {
-                    gameWords.AddRange(new List<string>(File.ReadAllLines("../../Wordlists/" + channel + ".txt")));
-                }
-                catch (Exception e)
-                {
-
-                }
             }
         }
 
@@ -198,8 +201,11 @@ namespace Coercion
             List<string> users = irc.UsersInChannel("#hackerthreads");
 
             List<string> potential_targets = new List<string>();
+            ClearGameWords();
             foreach (string channel in irc.UserChannels(p.Name))
             {
+                AddGameWords(channel);
+
                 Console.WriteLine("Gettting users in " + channel);
                 potential_targets.AddRange(irc.UsersInChannel("#" + channel));
             }

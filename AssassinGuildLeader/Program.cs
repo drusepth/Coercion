@@ -28,8 +28,6 @@ namespace Coercion
                 string message = ParseIRC.GetSpokenLine(line);
                 string channel = ParseIRC.GetChannel(line);
 
-                coercion.UpdateGameWords(channel);
-
                 switch (message)
                 {
                     case "!play":
