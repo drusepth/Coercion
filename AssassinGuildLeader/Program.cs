@@ -197,12 +197,12 @@ namespace Coercion
         static void Main(string[] args)
         {
             // Set up bot
-            irc.AddChannel("#guild");
-            irc.AddChannel("#test");
-            //irc.AddChannel("#hackerthreads");
-            //irc.AddChannel("#thunked");
-            //irc.AddChannel("#shells");
-            //irc.AddChannel("#CoreCraft");
+            //irc.AddChannel("#guild");
+            //irc.AddChannel("#test");
+            irc.AddChannel("#hackerthreads");
+            irc.AddChannel("#thunked");
+            irc.AddChannel("#shells");
+            irc.AddChannel("#CoreCraft");
             irc.AddLineHandler(GameLogic);
             irc.AddLineHandler(ConversationLog);
             irc.AddLineHandler(ListenForKills);
