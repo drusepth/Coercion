@@ -146,6 +146,9 @@ namespace Coercion
 
             // Remove the mission from active missions
             activeMissions.Remove(m);
+
+            // Save the scoreboards
+            scoreboard.SaveScores();
         }
 
         public bool HasAMission(Player p)

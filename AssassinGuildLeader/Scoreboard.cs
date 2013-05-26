@@ -12,6 +12,8 @@ namespace Coercion
         public Scoreboard(string filename)
         {
             backend = filename;
+
+            LoadScores();
         }
 
         public void Initialize(string person)
