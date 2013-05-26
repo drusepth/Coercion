@@ -46,11 +46,12 @@ namespace Coercion
                         }
                         break;
 
+                    case "!stop":
                     case "!quit":
                         bool removedPlayer = coercion.RemovePlayer(player, host);
                         if (removedPlayer)
                         {
-                            coercion.NotifyPlayer(irc, player, "You can run, but you can't hide!");
+                            coercion.NotifyPlayer(irc, player, "You can run, but you can't hide...");
                         }
                         break;
 
@@ -67,29 +68,33 @@ namespace Coercion
                     case "!score":
                     case "!scores":
                         if (coercion.IsPlayerInGame(player, host)) {
-                            coercion.NotifyPlayer(irc, player, "You have " + coercion.scoreboard[player] + " marks.");
+                            coercion.NotifyPlayer(irc, player, "You have " + coercion.scoreboard.ScoreFor(player) + " marks.");
                         }
                         break;
 
                     case "!scoreboard":
                         if (coercion.IsPlayerInGame(player, host))
                         {
-                            foreach (string p in coercion.scoreboard.Keys)
+                            foreach (string p in coercion.scoreboard.People())
                             {
-                                if (coercion.scoreboard[p] > 0)
+                                if (coercion.scoreboard.ScoreFor(p) > 0)
                                 {
-                                    coercion.NotifyPlayer(irc, player, p + " has " + coercion.scoreboard[p] + " marks.");
+                                    coercion.NotifyPlayer(irc, player, p + " has " + coercion.scoreboard.ScoreFor(p) + " marks.");
                                 }
                             }
                         }
                         break;
 
                     case "!rules":
-                        coercion.NotifyPlayer(irc, player, "The rules are simple. I assign you a target and a word; and it is your mission to make your target say that word using any means neccessary. A successful mission will result in a nice reward for you.");
+                        coercion.NotifyPlayer(irc, player, "The rules are simple. I assign you a target and a word; and it is your mission to make your target say that word using any means neccessary. A successful mission will result in a nice reward for you. To get started, type !play");
                         break;
 
                     case "!players":
                         coercion.NotifyPlayer(irc, player, "There are currently " + coercion.activePlayers.Count + " assassins in the guild.");
+                        break;
+
+                    case "!help":
+                        coercion.NotifyPlayer(irc, player, "Looking for help, I see? You're a lucky one; I just happen to overhear. I've noticed you here a few times and would like to extend a.. dangerous offer. If you're interested, type !rules to hear more.");
                         break;
                 }
             }
@@ -120,7 +125,7 @@ namespace Coercion
                         {
                             coercion.CompleteMission(m);
                             irc.MessageUser(m.Assassin.Name, "Congratulations, you've successfully coerced " + m.Target.Name + " to say " + m.Word + ". I'll be awarding you an Assassin's Mark (type !scores to see how many you've accumulated, and !scoreboard to compare yourself with others) and will be in contact with a new target soon. Good work.");
-                            irc.MessageChannel("#guild", m.Assassin.Name + " has convinced " + m.Target.Name + " to say " + m.Word + ". +1 marks (" + coercion.scoreboard[m.Assassin.Name] + " total marks)");
+                            irc.MessageChannel("#guild", m.Assassin.Name + " has convinced " + m.Target.Name + " to say " + m.Word + ". +1 marks (" + coercion.scoreboard.ScoreFor(m.Assassin.Name) + " total marks)");
                             // Can assign new mission here immediately or wait until next line said
                         }
                     }

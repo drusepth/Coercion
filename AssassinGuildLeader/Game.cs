@@ -13,7 +13,7 @@ namespace Coercion
         public List<Player> activePlayers = new List<Player>();
         public List<string> gameWords = new List<string>(File.ReadAllLines("../../Words.txt"));
 
-        Scoreboard scoreboard = new Scoreboard("../../Scoreboard.txt");
+        public Scoreboard scoreboard = new Scoreboard("../../Scoreboard.txt");
 
         public void PauseIfNecessary(Connection irc)
         {
@@ -73,9 +73,9 @@ namespace Coercion
         {
             Player player = new Player(name, host);
 
-            if (!scoreboard.ContainsKey(player.Name))
+            if (!scoreboard.Contains(player.Name))
             {
-                scoreboard.Add(player.Name, 0);
+                scoreboard.Initialize(player.Name);
             }
 
             // Don't do anything if this player is already in the game
@@ -134,7 +134,7 @@ namespace Coercion
         public void CompleteMission(Mission m)
         {
             // Give points to the assassin
-            scoreboard[m.Assassin.Name]++;
+            scoreboard.AddScoreFor(m.Assassin.Name);
 
             // Remove the mission from active missions
             activeMissions.Remove(m);
