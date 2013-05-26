@@ -4,3 +4,5 @@ clueless 1
 PowerWing 1
 dru 1
 dru` 0
+test -3
+druu 0

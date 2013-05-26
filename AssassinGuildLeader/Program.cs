@@ -64,7 +64,26 @@ namespace Coercion
                             Mission mission = coercion.GetMissionFor(p);
                             coercion.NotifyPlayer(irc, player, "Your mission is to make <" + mission.Target.Name + "> say '" + mission.Word + "'.");
                         }
-                        
+                        break;
+
+                    case "!newmission":
+                        if (coercion.IsPlayerInGame(player, host) && coercion.HasAMission(new Player(player, host)))
+                        {
+                            if (coercion.scoreboard.ScoreFor(player) > 0)
+                            {
+                                coercion.NotifyPlayer(irc, player, "I see. Well, if you can't handle it, you can't handle it. Fortunately for you, an Assassin's work is never done. I'll give you a new mission... but it's going to cost you a mark. I'll be in touch.");
+                                coercion.FailMission(new Player(player, host));
+                            }
+                            else if (coercion.scoreboard.ScoreFor(player) > -3)
+                            {
+                                coercion.NotifyPlayer(irc, player, "Maybe you're not cut out to be an assassin after all; to think I saw potential in you! Maybe.. maybe you'll manage it. A new target usually costs a mark but, seeing you don't have any, lets just drop you negative and look the other way. I'll be in touch with a new job soon: a chance to redeem yourself.");
+                                coercion.FailMission(new Player(player, host));
+                            }
+                            else
+                            {
+                                coercion.NotifyPlayer(irc, player, "You've had your chances. Either prove yourself as an assassin or leave the guild. No more do-overs, no more lenience, no more new missions. Take down your target first if you want another job.");
+                            }
+                        }
                         break;
 
                     case "!score":

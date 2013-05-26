@@ -175,6 +175,20 @@ namespace Coercion
             scoreboard.SaveScores();
         }
 
+        public void FailMission(Player p)
+        {
+            Mission m = GetMissionFor(p);
+
+            // Remove mark for failure
+            scoreboard.RemoveScoreFor(p.Name);
+
+            // Remove the mission from active missions
+            activeMissions.Remove(m);
+
+            // Save the scoreboards
+            scoreboard.SaveScores();
+        }
+
         public bool HasAMission(Player p)
         {
             foreach (Mission m in activeMissions)

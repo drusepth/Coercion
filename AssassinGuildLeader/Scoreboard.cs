@@ -36,6 +36,11 @@ namespace Coercion
             Data[person]++;
         }
 
+        public void RemoveScoreFor(string person)
+        {
+            Data[person]--;
+        }
+
         public List<string> People()
         {
             return new List<string>(Data.Keys);
