@@ -62,7 +62,7 @@ namespace Coercion
                         {
                             Player p = new Player(player, host);
                             Mission mission = coercion.GetMissionFor(p);
-                            coercion.NotifyPlayer(irc, player, "Your mission is to make <" + mission.Target.Name + "> say '" + mission.Word + "'.");
+                            coercion.NotifyPlayer(irc, player, "Your mission is to make <" + mission.Target.Name + "> say '" + mission.Word + "'. If you can't, I could probably find you some new work if you type !newmission, but it'll cost you a mark.");
                         }
                         break;
 

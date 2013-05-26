@@ -154,7 +154,7 @@ namespace Coercion
             List<Mission> missions = new List<Mission>();
             foreach (Mission m in activeMissions)
             {
-                if (m.Target == p)
+                if (m.Target.Name == p.Name)
                 {
                     missions.Add(m);
                 }
