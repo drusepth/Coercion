@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Coercion", "AssassinGuildLeader\Coercion.csproj", "{4F4AB1FE-7F6F-42BB-8D2C-5F8199167C9D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DIRC", "..\..\..\GitHub\IRC.NET\DIRC\DIRC.csproj", "{18D99774-3984-4FFE-9263-0DD39D334ACE}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4F4AB1FE-7F6F-42BB-8D2C-5F8199167C9D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4F4AB1FE-7F6F-42BB-8D2C-5F8199167C9D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4F4AB1FE-7F6F-42BB-8D2C-5F8199167C9D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4F4AB1FE-7F6F-42BB-8D2C-5F8199167C9D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{18D99774-3984-4FFE-9263-0DD39D334ACE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{18D99774-3984-4FFE-9263-0DD39D334ACE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{18D99774-3984-4FFE-9263-0DD39D334ACE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{18D99774-3984-4FFE-9263-0DD39D334ACE}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
