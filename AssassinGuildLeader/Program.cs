@@ -18,7 +18,7 @@ namespace Coercion
             coercion.EnsureEveryoneHasAMission(irc);
 
             // Update game target words
-            coercion.UpdateGameWords();
+            coercion.UpdateGameWords("");
 
             // Handle user commands
             if (ParseIRC.IsMessage(line))
@@ -26,6 +26,9 @@ namespace Coercion
                 string player = ParseIRC.GetUsernameSpeaking(line);
                 string host = ParseIRC.GetHostSpeaking(line);
                 string message = ParseIRC.GetSpokenLine(line);
+                string channel = ParseIRC.GetChannel(line);
+
+                coercion.UpdateGameWords(channel);
 
                 switch (message)
                 {
@@ -38,7 +41,7 @@ namespace Coercion
 
                             if (mission == null)
                             {
-                                coercion.NotifyPlayer(irc, player, "The game will resume when there are 4 people playing (there are currently " + coercion.activePlayers.Count + " playing). You will be assigned your first mission at that time.");
+                                coercion.NotifyPlayer(irc, player, "It's in everyone's best interest to wait until there are more assassins in the Guild (there are currently " + coercion.activePlayers.Count + "). You will be assigned your first mission when the head count is high enough.");
                             }
                             else
                             {
@@ -61,7 +64,7 @@ namespace Coercion
                         {
                             Player p = new Player(player, host);
                             Mission mission = coercion.GetMissionFor(p);
-                            coercion.NotifyPlayer(irc, player, "Your mission is to make " + mission.Target.Name + " say " + mission.Word + ".");
+                            coercion.NotifyPlayer(irc, player, "Your mission is to make <" + mission.Target.Name + "> say '" + mission.Word + "'.");
                         }
                         
                         break;
@@ -94,6 +97,7 @@ namespace Coercion
                         coercion.NotifyPlayer(irc, player, "There are currently " + coercion.activePlayers.Count + " assassins in the guild.");
                         break;
 
+                    case "!halp":
                     case "!help":
                         coercion.NotifyPlayer(irc, player, "Looking for help, I see? You're a lucky one; I just happen to overhear. I've noticed you here a few times and would like to extend a.. dangerous offer. If you're interested, type !rules to hear more.");
                         break;

@@ -32,7 +32,7 @@ namespace Coercion
             }
         }
 
-        public void UpdateGameWords()
+        public void UpdateGameWords(string channel)
         {
             Random rng = new Random();
 
@@ -40,6 +40,15 @@ namespace Coercion
             if (rng.Next(0, 10) == 1)
             {
                 gameWords = new List<string>(File.ReadAllLines("../../Wordlists/global-wordlist.txt"));
+
+                try
+                {
+                    gameWords.AddRange(new List<string>(File.ReadAllLines("../../Wordlists/" + channel + ".txt")));
+                }
+                catch (Exception e)
+                {
+
+                }
             }
         }
 
@@ -201,7 +210,7 @@ namespace Coercion
             // Strip out obvious problems
             for (int i = 0; i < potential_targets.Count; i++)
             {
-                if (potential_targets[i] == "Boros" || potential_targets[i] == p.Name)
+                if (potential_targets[i] == "Boros" || potential_targets[i] == p.Name || potential_targets[i] == "nanobot")
                 {
                     potential_targets.RemoveAt(i);
                     i--;
