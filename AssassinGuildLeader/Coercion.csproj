@@ -56,7 +56,10 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Scoreboard.txt" />
-    <Content Include="Words.txt" />
+    <Content Include="Wordlists\corecraft.txt" />
+    <Content Include="Wordlists\global-wordlist.txt" />
+    <Content Include="Wordlists\hackerthreads.txt" />
+    <Content Include="Wordlists\thunked.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

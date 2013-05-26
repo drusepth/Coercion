@@ -34,7 +34,8 @@ namespace Coercion
                         if (newPlayer)
                         {
                             coercion.NotifyPlayer(irc, player, "You there -- yes, you. I've noticed you lurking these channels for a while now, and I have a job for you. A... dark job, if you think you can handle it. My name is Boros, and I am the leader of the Assassin Guild here on TDDIRC.");
-                            Mission mission = coercion.AssignMissionTo(new Player(player, host));
+                            Mission mission = coercion.AssignMissionTo(irc, new Player(player, host));
+
                             if (mission == null)
                             {
                                 coercion.NotifyPlayer(irc, player, "The game will resume when there are 4 people playing (there are currently " + coercion.activePlayers.Count + " playing). You will be assigned your first mission at that time.");
@@ -135,22 +136,6 @@ namespace Coercion
 
         static void ListenForTargets(string line)
         {
-            /*
-            string[] splitLine = line.Split(' ');
-
-            if (splitLine.Length > 0 && splitLine[1] == "353")
-            {
-                for (int i = 6; i < splitLine.Length - 1; i++)
-                {
-                    string name = splitLine[i].Replace('@', ' ').Replace('+', ' ').Replace('~', ' ').Replace('%', ' ').Trim();
-                    if (!coercion.activeTargets.Contains(name))
-                    {
-                        coercion.activeTargets.Add(name);
-                    }
-                }
-            }
-            */
-
             string[] splitLine = line.Split(' ');
 
             if (splitLine.Length > 1 && splitLine[1] == "QUIT")
@@ -169,6 +154,11 @@ namespace Coercion
 
                 coercion.RemovePlayer(irc, name, host);
             }
+        }
+
+        static void CacheUserChannels(string line)
+        {
+
         }
 
         static void ConversationLog(string line)

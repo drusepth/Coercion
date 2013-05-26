@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 
 namespace Coercion
 {
@@ -11,14 +12,14 @@ namespace Coercion
 
         public List<Mission> activeMissions = new List<Mission>();
         public List<Player> activePlayers = new List<Player>();
-        public List<string> gameWords = new List<string>(File.ReadAllLines("../../Words.txt"));
+        public List<string> gameWords = new List<string>(File.ReadAllLines("../../Wordlists/global-wordlist.txt"));
 
         public Scoreboard scoreboard = new Scoreboard("../../Scoreboard.txt");
 
         public void PauseIfNecessary(Connection irc)
         {
             bool wasPaused = isPaused;
-            isPaused = (activePlayers.Count < 4);
+            isPaused = (activePlayers.Count < 2);
 
             if (!wasPaused && isPaused)
             {
@@ -27,7 +28,7 @@ namespace Coercion
 
             if (wasPaused && !isPaused)
             {
-                NotifyPlayers(irc, "Good news, assassin. There are now " + activePlayers.Count + " heads in the game, and play has resumed. Don't forget, if you ever forget your mission you may message me with !mission to be reminded.");
+                NotifyPlayers(irc, "Good news, assassin. There are now " + activePlayers.Count + " heads in the guild and play has resumed. I will be in touch with you shortly with some dirty work. Don't forget, if you ever forget your mission you may message me with !mission to be reminded.");
             }
         }
 
@@ -38,7 +39,7 @@ namespace Coercion
             // Only update game words every 10 lines or so
             if (rng.Next(0, 10) == 1)
             {
-                gameWords = new List<string>(File.ReadAllLines("../../Words.txt"));
+                gameWords = new List<string>(File.ReadAllLines("../../Wordlists/global-wordlist.txt"));
             }
         }
 
@@ -127,7 +128,7 @@ namespace Coercion
             {
                 if (!HasAMission(p))
                 {
-                    Mission m = AssignMissionTo(p);
+                    Mission m = AssignMissionTo(irc, p);
                     if (m != null)
                     {
                         irc.MessageUser(p.Name, "Pssst; I have a mission for you. The Guild needs you to make " + m.Target.Name + " say " + m.Word + " as soon as possible. Can you handle that?");
@@ -175,7 +176,7 @@ namespace Coercion
             return false;
         }
 
-        public Mission AssignMissionTo(Player p)
+        public Mission AssignMissionTo(Connection irc, Player p)
         {
             if (isPaused)
             {
@@ -183,16 +184,45 @@ namespace Coercion
             }
 
             Random rng = new Random();
-            Player target = activePlayers[rng.Next(0, activePlayers.Count)];
 
-            while (activePlayers.Count > 1 && target == p)
+            List<string> channels = irc.UserChannels(p.Name);
+            List<string> users = irc.UsersInChannel("#hackerthreads");
+
+            List<string> potential_targets = new List<string>();
+            foreach (string channel in irc.UserChannels(p.Name))
             {
-                target = activePlayers[rng.Next(0, activePlayers.Count)];
+                Console.WriteLine("Gettting users in " + channel);
+                potential_targets.AddRange(irc.UsersInChannel("#" + channel));
+            }
+
+            // Strip out target duplicates
+            potential_targets = potential_targets.Distinct().ToList();
+
+            // Strip out obvious problems
+            for (int i = 0; i < potential_targets.Count; i++)
+            {
+                if (potential_targets[i] == "Boros" || potential_targets[i] == p.Name)
+                {
+                    potential_targets.RemoveAt(i);
+                    i--;
+                }
+            }
+
+            if (potential_targets.Count == 0)
+            {
+                return null;
+            }
+
+            string target = potential_targets[rng.Next(0, potential_targets.Count)];
+
+            while (activePlayers.Count > 1 && target == p.Name)
+            {
+                target = potential_targets[rng.Next(0, potential_targets.Count)];
             }
 
             string word = gameWords[rng.Next(0, gameWords.Count)];
 
-            Mission mission = new Mission(p, target, word);
+            Mission mission = new Mission(p, new Player(target, ""), word);
             activeMissions.Add(mission);
 
             return mission;
