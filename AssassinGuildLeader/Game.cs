@@ -197,9 +197,6 @@ namespace Coercion
 
             Random rng = new Random();
 
-            List<string> channels = irc.UserChannels(p.Name);
-            List<string> users = irc.UsersInChannel("#hackerthreads");
-
             List<string> potential_targets = new List<string>();
             ClearGameWords();
             foreach (string channel in irc.UserChannels(p.Name))
