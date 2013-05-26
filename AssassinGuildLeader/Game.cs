@@ -98,7 +98,15 @@ namespace Coercion
                 return false;
             }
 
-            activePlayers.Remove(player);
+            // Find player and remove them
+            for (int i = 0; i < activePlayers.Count; i++)
+            {
+                if (activePlayers[i] == player)
+                {
+                    activePlayers.RemoveAt(i);
+                }
+            }
+
             return true;
         }
 
