@@ -94,21 +94,17 @@ namespace Coercion
 
                     case "!score":
                     case "!scores":
-                        if (coercion.IsPlayerInGame(player, host)) {
-                            coercion.NotifyPlayer(irc, player, "You have " + coercion.scoreboard.ScoreFor(player) + " marks.");
-                        }
+                        int score = coercion.scoreboard.People().Contains(player) == false ? 0 : coercion.scoreboard.ScoreFor(player);
+                        coercion.NotifyPlayer(irc, player, "You have " + score + " marks.");
                         break;
 
                     case "!leaderboard":
                     case "!scoreboard":
-                        if (coercion.IsPlayerInGame(player, host))
+                        foreach (string p in coercion.scoreboard.People())
                         {
-                            foreach (string p in coercion.scoreboard.People())
+                            if (coercion.scoreboard.ScoreFor(p) > 0)
                             {
-                                if (coercion.scoreboard.ScoreFor(p) > 0)
-                                {
-                                    coercion.NotifyPlayer(irc, player, p + " has " + coercion.scoreboard.ScoreFor(p) + " marks.");
-                                }
+                                coercion.NotifyPlayer(irc, player, p + " has " + coercion.scoreboard.ScoreFor(p) + " marks.");
                             }
                         }
                         break;
