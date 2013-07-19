@@ -114,7 +114,7 @@ namespace Coercion
                     case "!word":
                         if (coercion.scoreboard.ScoreFor(player) > 3)
                         {
-                            string phrase = message.Substring("!addword ".Length);
+                            string phrase = message.Substring("!addword ".Length).Split(' ')[0];
 
                             coercion.AddToWordlist(phrase, channel.Substring(1));
                             coercion.NotifyPlayer(irc, player, "So you want to put a hit out for '" + phrase + "', huh? I know some good guys, I will make it happen. For a price, of course; I'll be taking one of your marks now.");
@@ -219,8 +219,8 @@ namespace Coercion
         {
             // Set up bot
             irc.AddChannel("#guild");
-            irc.AddChannel("#test");
-            //irc.AddChannel("#interns");
+            //irc.AddChannel("#test");
+            irc.AddChannel("#interns");
             irc.AddLineHandler(GameLogic);
             irc.AddLineHandler(ConversationLog);
             irc.AddLineHandler(ListenForKills);
