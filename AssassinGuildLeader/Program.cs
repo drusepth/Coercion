@@ -30,6 +30,8 @@ namespace Coercion
 
                 switch (message)
                 {
+                    case "!start":
+                    case "!assassin":
                     case "!play":
                         bool newPlayer = coercion.AddPlayer(player, host);
                         if (newPlayer)
@@ -50,6 +52,7 @@ namespace Coercion
 
                     case "!stop":
                     case "!quit":
+                    case "!optout":
                         bool removedPlayer = coercion.RemovePlayer(irc, player, host);
                         if (removedPlayer)
                         {
@@ -57,6 +60,7 @@ namespace Coercion
                         }
                         break;
 
+                    case "!reminder":
                     case "!mission":
                         if (coercion.IsPlayerInGame(player, host) && coercion.HasAMission(new Player(player, host)))
                         {
@@ -66,6 +70,8 @@ namespace Coercion
                         }
                         break;
 
+                    case "!skipmission":
+                    case "!nextmission":
                     case "!newmission":
                         if (coercion.IsPlayerInGame(player, host) && coercion.HasAMission(new Player(player, host)))
                         {
@@ -93,6 +99,7 @@ namespace Coercion
                         }
                         break;
 
+                    case "!leaderboard":
                     case "!scoreboard":
                         if (coercion.IsPlayerInGame(player, host))
                         {
@@ -110,11 +117,13 @@ namespace Coercion
                         coercion.NotifyPlayer(irc, player, "The rules are simple. I assign you a target and a word; and it is your mission to make your target say that word using any means neccessary. A successful mission will result in a nice reward for you. To get started, type !play");
                         break;
 
+                    case "!assassins":
                     case "!players":
                         coercion.NotifyPlayer(irc, player, "There are currently " + coercion.activePlayers.Count + " assassins in the guild.");
                         break;
 
                     case "!halp":
+                    case "!wat":
                     case "!help":
                         coercion.NotifyPlayer(irc, player, "Looking for help, I see? You're a lucky one; I just happen to overhear. I've noticed you here a few times and would like to extend a.. dangerous offer. If you're interested, type !rules to hear more.");
                         break;
