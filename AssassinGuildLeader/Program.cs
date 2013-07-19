@@ -7,7 +7,7 @@ namespace Coercion
     class Program
     {
         static Game coercion = new Game();
-        static Connection irc = new Connection("Boros", "irc.tddirc.net", 6667);
+        static Connection irc = new Connection("boros", "irc.amazdong.com", 4080);
 
         static void GameLogic(string line)
         {
@@ -134,8 +134,6 @@ namespace Coercion
             string message = ParseIRC.GetSpokenLine(line);
             Player player = new Player(name, host);
 
-            List<string> words_said = new List<string>(message.ToLower().Split(' '));
-
             if (coercion.IsPlayerInGame(name, host))
             {
                 List<Mission> relevantMissons = coercion.MissionsWithTarget(player);
@@ -143,7 +141,8 @@ namespace Coercion
                 {
                     foreach (Mission m in relevantMissons)
                     {
-                        if (words_said.Contains(m.Word))
+                        // If the mission's word appears *somewhere* in this message, count it
+                        if (message.ToLower().IndexOf(m.Word) > -1)
                         {
                             coercion.CompleteMission(m);
                             irc.MessageUser(m.Assassin.Name, "Congratulations, you've successfully coerced " + m.Target.Name + " to say " + m.Word + ". I'll be awarding you an Assassin's Mark (type !scores to see how many you've accumulated, and !scoreboard to compare yourself with others) and will be in contact with a new target soon. Good work.");
@@ -197,12 +196,9 @@ namespace Coercion
         static void Main(string[] args)
         {
             // Set up bot
-            //irc.AddChannel("#guild");
-            //irc.AddChannel("#test");
-            irc.AddChannel("#hackerthreads");
-            irc.AddChannel("#thunked");
-            irc.AddChannel("#shells");
-            irc.AddChannel("#CoreCraft");
+            irc.AddChannel("#guild");
+            irc.AddChannel("#test");
+            //irc.AddChannel("#interns");
             irc.AddLineHandler(GameLogic);
             irc.AddLineHandler(ConversationLog);
             irc.AddLineHandler(ListenForKills);
