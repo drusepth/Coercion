@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Coercion", "AssassinGuildLeader\Coercion.csproj", "{4F4AB1FE-7F6F-42BB-8D2C-5F8199167C9D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DIRC", "..\..\..\GitHub\IRC.NET\DIRC\DIRC.csproj", "{18D99774-3984-4FFE-9263-0DD39D334ACE}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DIRC", "..\..\..\Documents\GitHub\IRC.NET\DIRC\DIRC.csproj", "{18D99774-3984-4FFE-9263-0DD39D334ACE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
