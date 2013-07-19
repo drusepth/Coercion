@@ -244,7 +244,7 @@ namespace Coercion
             // Strip out obvious problems
             for (int i = 0; i < potential_targets.Count; i++)
             {
-                if (potential_targets[i] == "Boros" || potential_targets[i] == p.Name || potential_targets[i] == "nanobot")
+                if (potential_targets[i].ToLower() == "boros" || potential_targets[i] == p.Name)
                 {
                     potential_targets.RemoveAt(i);
                     i--;
