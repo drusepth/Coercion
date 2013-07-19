@@ -28,7 +28,7 @@ namespace Coercion
                 string message = ParseIRC.GetSpokenLine(line);
                 string channel = ParseIRC.GetChannel(line);
 
-                switch (message)
+                switch (message.Split(' ')[0])
                 {
                     case "!start":
                     case "!assassin":
@@ -110,6 +110,23 @@ namespace Coercion
                                     coercion.NotifyPlayer(irc, player, p + " has " + coercion.scoreboard.ScoreFor(p) + " marks.");
                                 }
                             }
+                        }
+                        break;
+
+                    case "!addword":
+                    case "!add":
+                    case "!word":
+                        if (coercion.scoreboard.ScoreFor(player) > 3)
+                        {
+                            string phrase = message.Substring("!addword ".Length);
+
+                            coercion.AddToWordlist(phrase, channel.Substring(1));
+                            coercion.NotifyPlayer(irc, player, "So you want to put a hit out for '" + phrase + "', huh? I know some good guys, I will make it happen. For a price, of course; I'll be taking one of your marks now.");
+                            coercion.scoreboard.RemoveScoreFor(player);
+                        }
+                        else
+                        {
+                            coercion.NotifyPlayer(irc, player, "You've yet to prove yourself as a worthwhile assassin. Lets talk again when you get, say, three marks? You have " + coercion.scoreboard.ScoreFor(player) + " right now; you can do better than that.");
                         }
                         break;
 

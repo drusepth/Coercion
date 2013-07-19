@@ -55,6 +55,23 @@ namespace Coercion
             }
         }
 
+        public void AddToWordlist(string word, string channel)
+        {
+            try
+            {
+                if (!File.Exists("../../Wordlists/" + channel + ".txt"))
+                {
+                    FileStream fstream = File.Create("../../Wordlists/" + channel + ".txt");
+                    fstream.Close();
+                }
+                File.AppendAllLines("../../Wordlists/" + channel + ".txt", new List<string>() { word });
+            }
+            catch (Exception e)
+            {
+
+            }
+        }
+
         public void NotifyPlayers(Connection irc, string message)
         {
             foreach (Player p in activePlayers)
